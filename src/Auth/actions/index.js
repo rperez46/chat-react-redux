@@ -1,26 +1,34 @@
-import {LOGIN, SUCCESS_LOGIN, UPDATE_USERNAME, UPDATE_PASSWORD} from './types';
+import {LOGIN, SUCCESS_LOGIN, FAILED_LOGIN, UPDATE_EMAIL, UPDATE_PASSWORD} from './types';
+import firebase from 'firebase';
 
-const successLogin = () => {
+const successLogin = (user) => {
 	return {
 		type: SUCCESS_LOGIN
 	};
 };
+const failedLogin = () => {
+	return {
+		type: FAILED_LOGIN
+	};
+};
 
-export const login = (username, password) => {
+export const login = (email, password) => {
 	return dispatch => {
 		dispatch({
 			type: LOGIN
 		});
-		console.log(username, password);
-		setTimeout(() => {
-			dispatch( successLogin() );
-		}, 1000);
+		firebase
+			.auth()
+			.signInWithEmailAndPassword(email, password)
+			.then(user => dispatch(successLogin(user)))
+			.catch(() => dispatch(failedLogin()))
+
 	};
 };
 
-export const updateUsername = (text) => {
+export const updateEmail = (text) => {
 	return {
-		type: UPDATE_USERNAME,
+		type: UPDATE_EMAIL,
 		text
 	};
 };

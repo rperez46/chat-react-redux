@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {updateUsername, updatePassword, login} from '../actions';
+import {updateEmail, updatePassword, login} from '../actions';
 
 class Login extends Component {
 	login() {
 		this.props.login(
-			this.props.username,
+			this.props.email,
 			this.props.password
 		);
 	}
@@ -18,19 +18,23 @@ class Login extends Component {
 			<div>
 				<div>
 					<input
-						placeholder="username"
-						onChange={e => this.props.updateUsername(e.target.value)}
-						value={this.props.username}
+						id="email"
+						placeholder="Email"
+						onChange={e => this.props.updateEmail(e.target.value)}
+						value={this.props.email}
 					/>
 				</div>
 				<div>
 					<input
-						placeholder="password"
+						id="password"
+						placeholder="Password"
+						type="password"
 						onChange={e => this.props.updatePassword(e.target.value)}
 						value={this.props.password}
 					/>
 				</div>
 				{this.renderLoader()}
+				{this.props.error}
 				<div>
 					<button onClick={this.login.bind(this)}>
 						Iniciar sesión
@@ -42,9 +46,10 @@ class Login extends Component {
 }
 const mapStateToProps = state => {
 	return {
-		username: state.username,
+		email: state.email,
 		password: state.password,
-		loading: state.loading
+		loading: state.loading,
+		error: state.error
 	};
 };
-export default connect(mapStateToProps, {updateUsername, updatePassword, login})(Login);
+export default connect(mapStateToProps, {updateEmail, updatePassword, login})(Login);
