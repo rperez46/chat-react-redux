@@ -1,4 +1,11 @@
-import {LOGIN, SUCCESS_LOGIN, FAILED_LOGIN, UPDATE_EMAIL, UPDATE_PASSWORD} from './types';
+import {
+	LOGIN,
+	UPDATE_EMAIL,
+	FAILED_LOGIN,
+	SUCCESS_LOGIN,
+	UPDATE_PASSWORD
+} from './types';
+
 import firebase from 'firebase';
 
 const successLogin = (user) => {
@@ -6,9 +13,10 @@ const successLogin = (user) => {
 		type: SUCCESS_LOGIN
 	};
 };
-const failedLogin = () => {
+const failedLogin = ({message}) => {
 	return {
-		type: FAILED_LOGIN
+		type: FAILED_LOGIN,
+		message
 	};
 };
 
@@ -21,7 +29,7 @@ export const login = (email, password) => {
 			.auth()
 			.signInWithEmailAndPassword(email, password)
 			.then(user => dispatch(successLogin(user)))
-			.catch(() => dispatch(failedLogin()))
+			.catch((response) => dispatch(failedLogin(response)))
 
 	};
 };
