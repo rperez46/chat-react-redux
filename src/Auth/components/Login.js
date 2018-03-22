@@ -6,7 +6,6 @@ import {
 	Input,
 	Header,
 	Button,
-	Divider,
 	Segment
 } from 'semantic-ui-react';
 
