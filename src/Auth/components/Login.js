@@ -33,9 +33,8 @@ class Login extends Component {
 		};
 	}
 	render() {
-		const gridStyle = { marginTop: '50px' };
 		return (
-			<Grid style={gridStyle} columns={2} centered>
+			<Grid className="gridStyle" columns={2} centered>
 				<Grid.Row>
 					<Grid.Column>
 						<Header as="h1" textAlign="center">
@@ -67,7 +66,7 @@ class Login extends Component {
 						loading={this.props.loading}
 						onClick={this.login.bind(this)}
 					>
-						Iniciar sesión
+						Log in
 					</Button>
 				</Grid.Row>
 			</Grid>
