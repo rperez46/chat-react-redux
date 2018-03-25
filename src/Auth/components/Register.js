@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import {connect} from 'react-redux';
+import {connect}	from 'react-redux';
+import {Redirect}	from 'react-router';
 import {
 	Icon,
 	Grid,
@@ -8,21 +9,45 @@ import {
 	Header,
 	Segment
 } from 'semantic-ui-react';
-import {updateEmail, updatePassword, updateUsername, updateRePassword} from '../actions';
+import {
+	updateEmail,
+	RegisterUser,
+	updateRePassword,
+	updateRegisterPassword
+} from '../actions';
 
 class Register extends Component {
+	Register() {
+		if (this.props.passwordIsRePassword) {
+			const {email, password} = this.props;
+			this.props.RegisterUser( email, password );
+		}
+	}
+	renderSegment(child) {
+		return (
+			<Grid.Row>
+				<Grid.Column>
+					<Segment inverted color='red' tertiary>
+						{child}
+					</Segment>
+				</Grid.Column>
+			</Grid.Row>
+		);
+	}
 	renderRePasswordWarning() {
-		const {passwordIsRePassword} = this.props;
-		if (!passwordIsRePassword) {
-			return (
-				<Grid.Row>
-					<Grid.Column>
-						<Segment inverted color='red' tertiary>
-							The password field must be the same than the repeat password field. 
-						</Segment>
-					</Grid.Column>
-				</Grid.Row>
-			);
+		if (!this.props.passwordIsRePassword) {
+			return this.renderSegment('The password field must be the same than the repeat password field. ');
+		}
+	}
+	renderError() {
+		const {error} = this.props;
+		if (error) {
+			return this.renderSegment(error);
+		}
+	}
+	renderRedirect() {
+		if (this.props.successRegister) {
+			return <Redirect to="/" />;
 		}
 	}
 	render() {
@@ -44,16 +69,10 @@ class Register extends Component {
 							placeholder	= "Email"
 						/>
 						<Input fluid
-							id			= "username"
-							value		= {this.props.username}
-							onChange	= {e => this.props.updateUsername(e.target.value)}
-							placeholder	= "Usernmae"
-						/>
-						<Input fluid
 							id			= "password"
 							type		= "password"
 							value		= {this.props.password}
-							onChange	= {e => this.props.updatePassword(e.target.value)}
+							onChange	= {e => this.props.updateRegisterPassword(e.target.value)}
 							placeholder	= "Password"
 						/>
 						<Input fluid
@@ -64,11 +83,14 @@ class Register extends Component {
 							placeholder	= "Repeat Password"
 						/>
 						{this.renderRePasswordWarning()}
+						{this.renderRedirect()}
+						{this.renderError()}
 					</Grid.Column>
 				</Grid.Row>
 				<Grid.Row>
 					<Button
 						primary
+						onClick={this.Register.bind(this)}
 					>
 						Create account
 					</Button>
@@ -79,9 +101,11 @@ class Register extends Component {
 }
 
 export default connect(state => ({
+	error:		state.Register.error,
 	email:		state.Register.email,
-	username:	state.Register.username,
 	password:	state.Register.password,
 	rePassword:	state.Register.rePassword,
-	passwordIsRePassword: state.Register.passwordIsRePassword
-}), {updatePassword, updateEmail, updateUsername, updateRePassword})(Register);
+
+	successRegister:		state.Register.successRegister,
+	passwordIsRePassword: 	state.Register.passwordIsRePassword
+}), {updateRegisterPassword, updateEmail, updateRePassword, RegisterUser})(Register);
