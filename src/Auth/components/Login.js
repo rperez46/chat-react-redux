@@ -73,12 +73,11 @@ class Login extends Component {
 		);
 	}
 }
-const mapStateToProps = state => {
-	return {
-		email: state.email,
-		password: state.password,
-		loading: state.loading,
-		error: state.error
-	};
-};
-export default connect(mapStateToProps, {updateEmail, updatePassword, login})(Login);
+
+export default connect(state => ({
+	error:		state.Login.error,
+	email:		state.Login.email,
+	loading:	state.Login.loading,
+	password:	state.Login.password
+
+}), {updateEmail, updatePassword, login})(Login);
