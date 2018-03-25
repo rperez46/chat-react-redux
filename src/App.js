@@ -3,6 +3,7 @@ import {BrowserRouter as Router} from "react-router-dom";
 import firebase from 'firebase';
 import firebaseConfig from './Config/Firebase';
 import authRoutes from './Auth/routes';
+import chatRoutes from './Chat/routes';
 import './Auth/components/Auth.css';
 
 class App extends Component {
@@ -12,7 +13,10 @@ class App extends Component {
 	render() {
 		return (
 			<Router>
-				{authRoutes}
+				<div>
+					{authRoutes}
+					{chatRoutes}
+				</div>
 			</Router>
 		);
 	}
