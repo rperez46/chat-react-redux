@@ -1,5 +1,6 @@
 import React, {Component}	from 'react';
 import {connect}			from 'react-redux';
+import {Redirect}			from 'react-router';
 import {
 	Icon,
 	Grid,
@@ -32,11 +33,17 @@ class Login extends Component {
 			);
 		};
 	}
+	renderRedirect() {
+		if (this.props.isAuthenticated) {
+			return <Redirect to="/home" />
+		}
+	}
 	render() {
 		return (
 			<Grid className="gridStyle" columns={2} centered>
 				<Grid.Row>
 					<Grid.Column>
+						{this.renderRedirect()}
 						<Header as="h1" textAlign="center">
 							<Icon.Group>
 								<Icon name="television" />
@@ -78,6 +85,7 @@ export default connect(state => ({
 	error:		state.Login.error,
 	email:		state.Login.email,
 	loading:	state.Login.loading,
-	password:	state.Login.password
+	password:	state.Login.password,
+	isAuthenticated: state.Login.isAuthenticated
 
 }), {updateEmail, updatePassword, login})(Login);

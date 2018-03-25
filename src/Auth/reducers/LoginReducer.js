@@ -1,5 +1,6 @@
 import {
 	LOGIN,
+	USER_LOGOUT,
 	FAILED_LOGIN,
 	SUCCESS_LOGIN,
 
@@ -13,7 +14,8 @@ const INITIAL_STATE = {
 	loading:	false,
 
 	email:		'',
-	password:	''
+	password:	'',
+	isAuthenticated: false
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -26,9 +28,11 @@ export default (state = INITIAL_STATE, action) => {
 		case LOGIN:
 			return {...state, loading: true, error:''};
 		case SUCCESS_LOGIN:
-			return {...state, loading: false, email: '', password: ''}
+			return {...state, loading: false, email: '', password: '', isAuthenticated: true}
 		case FAILED_LOGIN:
 			return {...state, loading: false, password: '', error: action.message}
+		case USER_LOGOUT:
+			return {...INITIAL_STATE};
 		default:
 			return state;
 	}

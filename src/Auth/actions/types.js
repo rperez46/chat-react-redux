@@ -1,4 +1,5 @@
 export const LOGIN			= 'LOGIN';
+export const USER_LOGOUT	= 'USER_LOGOUT';
 export const FAILED_LOGIN	= 'FAILED_LOGIN';
 export const SUCCESS_LOGIN	= 'SUCCESS_LOGIN';
 
