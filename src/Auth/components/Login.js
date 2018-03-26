@@ -82,10 +82,10 @@ class Login extends Component {
 }
 
 export default connect(state => ({
-	error:		state.Login.error,
-	email:		state.Login.email,
-	loading:	state.Login.loading,
-	password:	state.Login.password,
-	isAuthenticated: state.Login.isAuthenticated
+	error:		state.Auth.Login.error,
+	email:		state.Auth.Login.email,
+	loading:	state.Auth.Login.loading,
+	password:	state.Auth.Login.password,
+	isAuthenticated: state.Auth.Login.isAuthenticated
 
 }), {updateEmail, updatePassword, login})(Login);

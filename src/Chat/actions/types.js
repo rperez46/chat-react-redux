@@ -1,0 +1,1 @@
+export const LOAD_CHAT_ROOMS = 'LOAD_CHAT_ROOMS';

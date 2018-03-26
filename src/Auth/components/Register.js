@@ -101,11 +101,11 @@ class Register extends Component {
 }
 
 export default connect(state => ({
-	error:		state.Register.error,
-	email:		state.Register.email,
-	password:	state.Register.password,
-	rePassword:	state.Register.rePassword,
+	error:		state.Auth.Register.error,
+	email:		state.Auth.Register.email,
+	password:	state.Auth.Register.password,
+	rePassword:	state.Auth.Register.rePassword,
 
-	successRegister:		state.Register.successRegister,
-	passwordIsRePassword: 	state.Register.passwordIsRePassword
+	successRegister:		state.Auth.Register.successRegister,
+	passwordIsRePassword: 	state.Auth.Register.passwordIsRePassword
 }), {updateRegisterPassword, updateEmail, updateRePassword, RegisterUser})(Register);

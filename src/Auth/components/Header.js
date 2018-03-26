@@ -20,6 +20,6 @@ class Header extends Component {
 	}
 }
 export default connect(state => ({
-	user: state.User,
-	isAuthenticated: state.Login.isAuthenticated
+	user: state.Auth.User,
+	isAuthenticated: state.Auth.Login.isAuthenticated
 }), {logout})(Header);
