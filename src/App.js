@@ -5,6 +5,8 @@ import firebaseConfig from './Config/Firebase';
 import authRoutes from './Auth/routes';
 import chatRoutes from './Chat/routes';
 import './Auth/components/Auth.css';
+import './Chat/components/Chat.css';
+import {Container} from 'semantic-ui-react';
 
 class App extends Component {
 	componentWillMount() {
@@ -13,10 +15,10 @@ class App extends Component {
 	render() {
 		return (
 			<Router>
-				<div>
+				<Container>
 					{authRoutes}
 					{chatRoutes}
-				</div>
+				</Container>
 			</Router>
 		);
 	}

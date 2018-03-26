@@ -22,6 +22,7 @@ export const subscribeToChat = chatName => {
 		const chatRef = firebase
 			.database()
 			.ref('chat/' + chatName);
+
 		dispatch({ type: CONNECT_TO_CHAT, chatRef });
 		chatRef.on('value', snapshot => {
 			const messages = snapshot.val() ? snapshot.val() : [];
@@ -36,12 +37,7 @@ export const unsubscribeToChat = chatRef => {
 
 export const sendMessage = (chatRef, message, email) => {
 	return dispatch => {
-		chatRef.transaction(snapshot => {
-			if (!snapshot) snapshot = [];
-			snapshot.push({ message, from: email });
-
-			dispatch({ type: MESSAGE_SENT });
-			return snapshot;
-		});
+		chatRef.push({ message, from: email });
+		dispatch({ type: MESSAGE_SENT });
 	};
 };

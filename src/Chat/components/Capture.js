@@ -10,7 +10,6 @@ import {updateChatInput, sendMessage} from '../actions';
 class Capture extends Component {
 	sendMessage() {
 		const {input, chatRef, user} = this.props;
-		console.log(input, chatRef);
 		if (chatRef && input) {
 			this.props.sendMessage( chatRef, input, user.email );
 		}

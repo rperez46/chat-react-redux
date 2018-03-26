@@ -21,6 +21,10 @@ class Messages extends Component {
 			this.subscribeToChat(newChatRoom);
 		}
 	}
+	componentDidUpdate() {
+		const grid = document.getElementById('messageGrid');
+		grid.scrollTop = grid.scrollHeight;
+	}
 	subscribeToChat(chatRoom) {
 		const room = this.props.rooms.find(x => x.url === chatRoom);
 		if (room)
@@ -36,6 +40,7 @@ class Messages extends Component {
 		if (message.from === this.props.user.email) {
 			messageSettings = { align: 'right', color: 'green' };
 		}
+
 		return (
 			<Grid.Row key={'chatMessage' + index}>
 				<Grid.Column floated={messageSettings.align}>
@@ -47,10 +52,18 @@ class Messages extends Component {
 			</Grid.Row>
 		);
 	}
+	renderMessages() {
+		const messages = {...this.props.messages};
+		const result = [];
+		for (const key in messages) {
+			result.push(this.renderMessage(messages[key], key));
+		}
+		return result;
+	}
 	render() {
 		return (
-			<Grid columns={2}>
-				{this.props.messages.map(this.renderMessage.bind(this))}
+			<Grid id="messageGrid" className="messageGrid" columns={2}>
+				{this.renderMessages()}
 			</Grid>
 		);
 	}
