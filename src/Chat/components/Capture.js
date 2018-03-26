@@ -14,12 +14,17 @@ class Capture extends Component {
 			this.props.sendMessage( chatRef, input, user.email );
 		}
 	}
+	keyDown(e) {
+		if (e.keyCode === 13)
+			return this.sendMessage();
+	}
 	render() {
 		return (
 			<Segment>
 				<Input
 					value		= {this.props.input}
 					onChange	= {e => this.props.updateChatInput(e.target.value)}
+					onKeyDown	= {this.keyDown.bind(this)}
 					placeholder	= "Write something..."
 				/>
 				<Button onClick={this.sendMessage.bind(this)}>
