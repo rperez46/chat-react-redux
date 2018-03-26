@@ -1,6 +1,6 @@
 import React, {Component}	from 'react';
 import {connect}			from 'react-redux';
-import {subscribeToChat}	from '../actions';
+import {subscribeToChat, unsubscribeToChat}	from '../actions';
 import {
 	Grid,
 	Segment,
@@ -8,14 +8,28 @@ import {
 
 class Messages extends Component {
 	componentDidMount() {
-		const {chatRoom} = this.props.match.params;
-
+		this.subscribeToChat(this.props.match.params.chatRoom);
+	}
+	componentWillUnmount() {
+		this.unsubscribeToChat();
+	}
+	componentWillReceiveProps(nextProps) {
+		const oldChatRoom = this.props.match.params.chatRoom;
+		const newChatRoom = nextProps.match.params.chatRoom;
+		if (oldChatRoom !== newChatRoom) {
+			this.unsubscribeToChat(this.props.chatRef);
+			this.subscribeToChat(newChatRoom);
+		}
+	}
+	subscribeToChat(chatRoom) {
 		const room = this.props.rooms.find(x => x.url === chatRoom);
 		if (room)
 			this.props.subscribeToChat( room.url );
 	}
-	componentWillUnmount() {
-
+	unsubscribeToChat() {
+		if (this.props.chatRef) {
+			this.props.unsubscribeToChat( this.props.chatRef );
+		}
 	}
 	renderMessage(message, index) {
 		let messageSettings = { align: 'left', color: 'blue' };
@@ -45,5 +59,6 @@ class Messages extends Component {
 export default connect(state => ({
 	user:		state.Auth.User,
 	rooms:		state.Chat.Rooms,
+	chatRef:	state.Chat.Chat.chatRef,
 	messages:	state.Chat.Chat.messages
-}), {subscribeToChat})(Messages);
+}), {subscribeToChat, unsubscribeToChat})(Messages);

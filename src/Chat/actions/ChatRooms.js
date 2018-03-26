@@ -3,7 +3,8 @@ import {
 	MESSAGE_SENT,
 	LOAD_CHAT_ROOMS,
 	CONNECT_TO_CHAT,
-	UPDATE_MESSAGES
+	UPDATE_MESSAGES,
+	DISCONNECTED_FROM_CHAT
 	} from './types';
 
 export const LoadChatRooms = () => {
@@ -22,13 +23,16 @@ export const subscribeToChat = chatName => {
 			.database()
 			.ref('chat/' + chatName);
 		dispatch({ type: CONNECT_TO_CHAT, chatRef });
-
 		chatRef.on('value', snapshot => {
 			const messages = snapshot.val() ? snapshot.val() : [];
 			dispatch({ type: UPDATE_MESSAGES, messages });
 		});
 	};
 };
+export const unsubscribeToChat = chatRef => {
+	chatRef.off();
+	return { type: DISCONNECTED_FROM_CHAT };
+}
 
 export const sendMessage = (chatRef, message, email) => {
 	return dispatch => {
