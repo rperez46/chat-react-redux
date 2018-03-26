@@ -1,5 +1,10 @@
 import firebase from 'firebase';
-import {LOAD_CHAT_ROOMS, CONNECT_TO_CHAT, UPDATE_MESSAGES} from './types';
+import {
+	MESSAGE_SENT,
+	LOAD_CHAT_ROOMS,
+	CONNECT_TO_CHAT,
+	UPDATE_MESSAGES
+	} from './types';
 
 export const LoadChatRooms = () => {
 	return dispatch => {
@@ -19,13 +24,20 @@ export const subscribeToChat = chatName => {
 		dispatch({ type: CONNECT_TO_CHAT, chatRef });
 
 		chatRef.on('value', snapshot => {
-			dispatch({ type: UPDATE_MESSAGES, messages: snapshot.val() });
+			const messages = snapshot.val() ? snapshot.val() : [];
+			dispatch({ type: UPDATE_MESSAGES, messages });
 		});
 	};
 };
 
-export const sendMessage = (chatRef, message) => {
+export const sendMessage = (chatRef, message, email) => {
 	return dispatch => {
-		//chatRef.transaction
+		chatRef.transaction(snapshot => {
+			if (!snapshot) snapshot = [];
+			snapshot.push({ message, from: email });
+
+			dispatch({ type: MESSAGE_SENT });
+			return snapshot;
+		});
 	};
 };

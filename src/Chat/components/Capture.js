@@ -9,9 +9,10 @@ import {updateChatInput, sendMessage} from '../actions';
 
 class Capture extends Component {
 	sendMessage() {
-		const {input, chatRef} = this.props;
+		const {input, chatRef, user} = this.props;
+		console.log(input, chatRef);
 		if (chatRef && input) {
-			this.props.sendMessage( chatRef, input );
+			this.props.sendMessage( chatRef, input, user.email );
 		}
 	}
 	render() {
@@ -19,7 +20,7 @@ class Capture extends Component {
 			<Segment>
 				<Input
 					value		= {this.props.input}
-					onChange	= {this.props.updateChatInput}
+					onChange	= {e => this.props.updateChatInput(e.target.value)}
 					placeholder	= "Write something..."
 				/>
 				<Button onClick={this.sendMessage.bind(this)}>
@@ -31,6 +32,7 @@ class Capture extends Component {
 }
 
 export default connect(state => ({
-	input:		state.Chat.input,
-	chatRef:	state.Chat.chatRef
+	user:		state.Auth.User,
+	input:		state.Chat.Chat.input,
+	chatRef:	state.Chat.Chat.chatRef
 }), {updateChatInput, sendMessage})(Capture); 

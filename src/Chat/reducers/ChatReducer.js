@@ -1,5 +1,6 @@
 
 import {
+	MESSAGE_SENT,
 	UPDATE_MESSAGES,
 	CONNECT_TO_CHAT,
 	UPDATE_CHAT_INPUT
@@ -17,9 +18,11 @@ export default (state = INITIAL_STATE, action) => {
 		case CONNECT_TO_CHAT:
 			return {...state, chatRef: action.chatRef};
 		case UPDATE_CHAT_INPUT:
-			return {...state, input: action.text}
+			return {...state, input: action.text};
 		case UPDATE_MESSAGES:
-			return {...state, messages: action.messages}
+			return {...state, messages: action.messages};
+		case MESSAGE_SENT:
+			return {...state, input: ''};
 		default:
 			return state;
 	}

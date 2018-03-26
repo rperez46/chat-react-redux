@@ -17,8 +17,8 @@ class Chat extends Component {
 			<Grid centered>
 				<Grid.Column width={6}>
 					{this.redirectOnLogout()}
-					<Route exact path="/home" component={ChatRooms} />
-					<Route exact path="/home/:chatRoom" component={ListOfUsers} />
+					<Route path="/home" component={ChatRooms} />
+					{/*<Route exact path="/home/:chatRoom" component={ListOfUsers} />*/}
 				</Grid.Column>
 				<Grid.Column width={10}>
 					<Route exact path="/home/:chatRoom" component={Messages} />

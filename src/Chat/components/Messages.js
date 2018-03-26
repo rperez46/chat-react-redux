@@ -26,6 +26,7 @@ class Messages extends Component {
 			<Grid.Row key={'chatMessage' + index}>
 				<Grid.Column floated={messageSettings.align}>
 					<Segment color={messageSettings.color}>
+						<b>{message.from}</b> <hr/>
 						{message.message}
 					</Segment>
 				</Grid.Column>
