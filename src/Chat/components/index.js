@@ -5,7 +5,7 @@ import {Grid}		from 'semantic-ui-react';
 import Messages		from './Messages';
 import ChatRooms	from './ChatRooms';
 import ListOfUsers	from './ListOfUsers';
-
+import Capture		from './Capture';
 class Chat extends Component {
 	redirectOnLogout() {
 		if (!this.props.isAuthenticated) {
@@ -22,6 +22,7 @@ class Chat extends Component {
 				</Grid.Column>
 				<Grid.Column width={10}>
 					<Route exact path="/home/:chatRoom" component={Messages} />
+					<Route exact path="/home/:chatRoom" component={Capture} />
 				</Grid.Column>
 			</Grid>
 		);
