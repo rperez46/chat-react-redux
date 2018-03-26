@@ -1,6 +1,6 @@
 import React, {Component}	from 'react';
 import {connect}	from 'react-redux';
-import {Button} from 'semantic-ui-react';
+import {Button, Menu, Icon, Dropdown} from 'semantic-ui-react';
 import {logout} from '../actions';
 
 class Header extends Component {
@@ -10,12 +10,23 @@ class Header extends Component {
 			return false;
 		}
 		return (
-			<div>
-				{user.email}
-				<Button onClick={this.props.logout}>
-					Logout
-				</Button>
-			</div>
+			<Menu inverted>
+				<Menu.Item>
+					<Icon name="user" />
+					{user.email}
+				</Menu.Item>
+				
+				<Menu.Menu position='right'>
+					<Dropdown direction="right" item simple text='Menu'>
+						<Dropdown.Menu>
+							<Dropdown.Item onClick={this.props.logout}>
+								<Icon name="log out" />
+								Logout
+							</Dropdown.Item>
+						</Dropdown.Menu>
+					</Dropdown>
+				</Menu.Menu>
+			</Menu>
 		);
 	}
 }

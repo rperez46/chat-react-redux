@@ -15,10 +15,12 @@ class App extends Component {
 	render() {
 		return (
 			<Router>
-				<Container>
+				<div>
 					{authRoutes}
-					{chatRoutes}
-				</Container>
+					<Container>
+						{chatRoutes}
+					</Container>
+				</div>
 			</Router>
 		);
 	}
