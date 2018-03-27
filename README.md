@@ -1,6 +1,10 @@
 # Proyecto de prueba
 Este proyecto fue creado para aprender react con redux.
 El proyecto fue creado con: [create-react-app](https://github.com/facebook/create-react-app)
+
+## Demo
+[demo](http://chat.rperez46.com/)
+
 ## Instalar
 Para instalar descargar el proyecto instalar los paquetes con npm, y configurar Firebase.
 (Es necesario contar con un proyecto con auth en Firebase, para configurarlo y probar)
