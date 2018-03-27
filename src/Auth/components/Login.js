@@ -1,6 +1,7 @@
 import React, {Component}	from 'react';
 import {connect}			from 'react-redux';
 import {Redirect}			from 'react-router';
+import {Link}				from 'react-router-dom';
 import {
 	Icon,
 	Grid,
@@ -109,6 +110,11 @@ class Login extends Component {
 					>
 						Log in
 					</Button>
+				</Grid.Row>
+				<Grid.Row>
+					<Link to={'/register'}>
+						Click here for Register !
+					</Link>
 				</Grid.Row>
 			</Grid>
 		);
