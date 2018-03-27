@@ -10,7 +10,7 @@ import {
 	Segment
 } from 'semantic-ui-react';
 
-import {updateEmail, updatePassword, login} from '../actions';
+import {updateEmail, updatePassword, login, sendActivationMail} from '../actions';
 
 class Login extends Component {
 	login() {
@@ -18,6 +18,38 @@ class Login extends Component {
 			this.props.email,
 			this.props.password
 		);
+	}
+	renderEmailVerification() {
+		if (this.props.requireEmailVerification) {
+			return (
+				<Grid.Row>
+					<Grid.Column>
+						<Segment inverted color='red' tertiary>
+							You need verify your email first.
+						</Segment>
+					</Grid.Column>
+				</Grid.Row>
+			);
+		}
+	}
+	renderSentEmailButton() {
+		if (this.props.isEmailSent) {
+			return (
+				<Grid.Row>
+					<Grid.Column>
+						<Segment inverted color='green' tertiary>
+							Confirmation email sent.
+						</Segment>
+					</Grid.Column>
+				</Grid.Row>
+			);
+		} else if (this.props.requireEmailVerification) {
+			return (
+				<Button loading={this.props.loadingVerification} onClick={this.props.sendActivationMail}>
+					Click here to send again the email.
+				</Button>
+			);
+		}
 	}
 	renderErrors() {
 		const {error} = this.props;
@@ -67,6 +99,8 @@ class Login extends Component {
 					</Grid.Column>
 				</Grid.Row>
 				{this.renderErrors()}
+				{this.renderEmailVerification()}
+				{this.renderSentEmailButton()}
 				<Grid.Row>
 					<Button
 						primary
@@ -86,6 +120,10 @@ export default connect(state => ({
 	email:		state.Auth.Login.email,
 	loading:	state.Auth.Login.loading,
 	password:	state.Auth.Login.password,
-	isAuthenticated: state.Auth.Login.isAuthenticated
+	isAuthenticated: state.Auth.Login.isAuthenticated,
 
-}), {updateEmail, updatePassword, login})(Login);
+	isEmailSent:				state. Auth.Verification.isEmailSent,
+	loadingVerification:		state.Auth.Verification.loading,
+	requireEmailVerification:	state.Auth.Verification.requireEmailVerification
+
+}), {updateEmail, updatePassword, login, sendActivationMail})(Login);

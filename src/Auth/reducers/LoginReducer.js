@@ -3,6 +3,7 @@ import {
 	USER_LOGOUT,
 	FAILED_LOGIN,
 	SUCCESS_LOGIN,
+	REQUIRE_EMAIL_VERIFICATION,
 
 	UPDATE_EMAIL,
 	UPDATE_PASSWORD
@@ -33,6 +34,8 @@ export default (state = INITIAL_STATE, action) => {
 			return {...state, loading: false, password: '', error: action.message}
 		case USER_LOGOUT:
 			return {...INITIAL_STATE};
+		case REQUIRE_EMAIL_VERIFICATION:
+			return {...state, loading: false, password: ''};
 		default:
 			return state;
 	}
