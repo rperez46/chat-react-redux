@@ -16,7 +16,13 @@ const successLogin = (user, dispatch) => {
 	return { type: REQUIRE_EMAIL_VERIFICATION };
 };
 const failedLogin = ({message})	=> ({ type: FAILED_LOGIN, message });
-
+const createOnLogoutListener = (dispatch) => {
+	firebase.auth().onAuthStateChanged(user => {
+		if (!user) {
+			dispatch({ type: USER_LOGOUT });
+		}
+	});
+}
 export const login = (email, password) => {
 	return dispatch => {
 		dispatch({
@@ -38,10 +44,3 @@ export const logout = () => {
 			.then(() => dispatch({ type: USER_LOGOUT }))
 	};
 };
-const createOnLogoutListener = (dispatch) => {
-	firebase.auth().onAuthStateChanged(user => {
-		if (!user) {
-			dispatch({ type: USER_LOGOUT });
-		}
-	});
-}

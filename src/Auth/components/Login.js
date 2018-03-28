@@ -71,6 +71,13 @@ class Login extends Component {
 			return <Redirect to="/home" />
 		}
 	}
+	renderforgotPassword() {
+		return (
+			<Link to="/forgot-password">
+				Forgot password.
+			</Link>
+		);
+	}
 	render() {
 		return (
 			<Grid className="gridStyle" columns={2} centered>
@@ -115,6 +122,9 @@ class Login extends Component {
 					<Link to={'/register'}>
 						Click here for Register !
 					</Link>
+				</Grid.Row>
+				<Grid.Row>
+					{this.renderforgotPassword()}
 				</Grid.Row>
 			</Grid>
 		);
