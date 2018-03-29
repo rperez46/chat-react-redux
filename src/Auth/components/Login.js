@@ -10,6 +10,7 @@ import {
 	Button,
 	Segment
 } from 'semantic-ui-react';
+import { toast } from 'react-toastify';
 
 import {updateEmail, updatePassword, login, sendActivationMail} from '../actions';
 
@@ -68,6 +69,7 @@ class Login extends Component {
 	}
 	renderRedirect() {
 		if (this.props.isAuthenticated) {
+			toast.success("Welcome !");
 			return <Redirect to="/home" />
 		}
 	}

@@ -7,6 +7,7 @@ import chatRoutes from './Chat/routes';
 import './Auth/components/Auth.css';
 import './Chat/components/Chat.css';
 import {Container} from 'semantic-ui-react';
+import { ToastContainer } from 'react-toastify';
 
 class App extends Component {
 	componentWillMount() {
@@ -16,6 +17,7 @@ class App extends Component {
 		return (
 			<Router>
 				<div>
+					<ToastContainer />
 					{authRoutes}
 					<Container>
 						{chatRoutes}
