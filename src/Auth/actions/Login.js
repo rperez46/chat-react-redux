@@ -7,22 +7,7 @@ import {
 } from './types';
 
 import firebase from 'firebase';
-
-const successLogin = (user, dispatch) => {
-	if (user.emailVerified) {
-		createOnLogoutListener(dispatch);
-		return { type: SUCCESS_LOGIN, user };
-	}
-	return { type: REQUIRE_EMAIL_VERIFICATION };
-};
-const failedLogin = ({message})	=> ({ type: FAILED_LOGIN, message });
-const createOnLogoutListener = (dispatch) => {
-	firebase.auth().onAuthStateChanged(user => {
-		if (!user) {
-			dispatch({ type: USER_LOGOUT });
-		}
-	});
-}
+// Login
 export const login = (email, password) => {
 	return dispatch => {
 		dispatch({
@@ -36,6 +21,15 @@ export const login = (email, password) => {
 
 	};
 };
+const successLogin = (user, dispatch) => {
+	if (user.emailVerified) {
+		createOnLogoutListener(dispatch);
+		return { type: SUCCESS_LOGIN, user };
+	}
+	return { type: REQUIRE_EMAIL_VERIFICATION };
+};
+const failedLogin = ({message})	=> ({ type: FAILED_LOGIN, message });
+// Logout
 export const logout = () => {
 	return dispatch => {
 		firebase
@@ -44,3 +38,11 @@ export const logout = () => {
 			.then(() => dispatch({ type: USER_LOGOUT }))
 	};
 };
+
+const createOnLogoutListener = (dispatch) => {
+	firebase.auth().onAuthStateChanged(user => {
+		if (!user) {
+			dispatch({ type: USER_LOGOUT });
+		}
+	});
+}

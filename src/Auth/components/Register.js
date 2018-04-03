@@ -10,6 +10,7 @@ import {
 	Segment
 } from 'semantic-ui-react';
 import {
+	logout,
 	updateEmail,
 	RegisterUser,
 	updateRePassword,
@@ -49,6 +50,7 @@ class Register extends Component {
 	renderRedirect() {
 		if (this.props.successRegister) {
 			this.props.sendActivationMail();
+			this.props.logout();
 			return <Redirect to="/" />;
 		}
 	}
@@ -92,6 +94,7 @@ class Register extends Component {
 				<Grid.Row>
 					<Button
 						primary
+						loading={this.props.loading}
 						onClick={this.Register.bind(this)}
 					>
 						Create account
@@ -105,9 +108,17 @@ class Register extends Component {
 export default connect(state => ({
 	error:		state.Auth.Register.error,
 	email:		state.Auth.Register.email,
+	loading:	state.Auth.Register.loading,
 	password:	state.Auth.Register.password,
 	rePassword:	state.Auth.Register.rePassword,
 
 	successRegister:		state.Auth.Register.successRegister,
 	passwordIsRePassword: 	state.Auth.Register.passwordIsRePassword
-}), {updateRegisterPassword, updateEmail, updateRePassword, RegisterUser, sendActivationMail})(Register);
+}), {
+	logout,
+	updateEmail,
+	RegisterUser,
+	updateRePassword,
+	sendActivationMail,
+	updateRegisterPassword
+})(Register);
