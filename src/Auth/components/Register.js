@@ -13,6 +13,7 @@ import {
 	updateEmail,
 	RegisterUser,
 	updateRePassword,
+	sendActivationMail,
 	updateRegisterPassword
 } from '../actions';
 
@@ -47,6 +48,7 @@ class Register extends Component {
 	}
 	renderRedirect() {
 		if (this.props.successRegister) {
+			this.props.sendActivationMail();
 			return <Redirect to="/" />;
 		}
 	}
@@ -108,4 +110,4 @@ export default connect(state => ({
 
 	successRegister:		state.Auth.Register.successRegister,
 	passwordIsRePassword: 	state.Auth.Register.passwordIsRePassword
-}), {updateRegisterPassword, updateEmail, updateRePassword, RegisterUser})(Register);
+}), {updateRegisterPassword, updateEmail, updateRePassword, RegisterUser, sendActivationMail})(Register);

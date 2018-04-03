@@ -5,9 +5,13 @@ import {
 	UPDATE_REGISTER_PASSWORD
 } from './types';
 import firebase from 'firebase';
+import { toast } from 'react-toastify';
 
 const failed	= ({message}) => ({ type: FAILED_REGISTER, message });
-const success	= user => ({ type: SUCCESS_REGISTER, user });
+const success	= user => {
+	toast.success("A confirmation email has been sent to your email");
+	return { type: SUCCESS_REGISTER, user };
+};
 
 export const updateRegisterPassword	= text => ({ type: UPDATE_REGISTER_PASSWORD,	text });
 export const RegisterUser = (email, password) => {
