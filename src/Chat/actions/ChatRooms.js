@@ -17,27 +17,67 @@ export const LoadChatRooms = () => {
 	};
 };
 
-export const subscribeToChat = chatName => {
+export const subscribeToChat = (chatName, userEmail) => {
 	return dispatch => {
 		const chatRef = firebase
 			.database()
-			.ref('chat/' + chatName);
+			.ref('chat/' + chatName + '/messages');
 
-		dispatch({ type: CONNECT_TO_CHAT, chatRef });
+
+		connectToChat(chatName, userEmail, chatRef, dispatch);
+
 		chatRef.on('value', snapshot => {
 			const messages = snapshot.val() ? snapshot.val() : [];
 			dispatch({ type: UPDATE_MESSAGES, messages });
 		});
 	};
 };
-export const unsubscribeToChat = chatRef => {
+export const unsubscribeToChat = (chatRef, chatName, sessionKey) => {
 	chatRef.off();
+
+	if (sessionKey) {
+		firebase
+			.database()
+			.ref('chat/' + chatName + '/users/' + sessionKey)
+			.remove();
+	}
+
 	return { type: DISCONNECTED_FROM_CHAT };
 }
 
-export const sendMessage = (chatRef, message, email) => {
+export const sendMessage = (chatRef, message, email, dispatch) => {
 	return dispatch => {
 		chatRef.push({ message, from: email });
 		dispatch({ type: MESSAGE_SENT });
 	};
 };
+const connectToChat = (chatName, userEmail, chatRef, dispatch) => {
+	const onlineUsersRef = firebase
+		.database()
+		.ref('chat/' + chatName + '/users');
+
+	onlineUsersRef
+		.orderByChild('email')
+		.equalTo(userEmail)
+		.once('value')
+		.then((snapshot) => {
+
+			deleteOldSessions(snapshot.val(), onlineUsersRef);
+
+			dispatch({
+				type: CONNECT_TO_CHAT,
+				chatRef,
+				chatName,
+				sessionKey: onlineUsersRef.push({ email: userEmail }).key
+			});
+		});
+};
+const deleteOldSessions = (users, ref) => {
+	if (users) {
+		Object.keys(users).map(key => {
+			users[key] = null;
+			return users[key];
+		});
+		ref.update( users );
+	}
+}

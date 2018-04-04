@@ -28,11 +28,15 @@ class Messages extends Component {
 	subscribeToChat(chatRoom) {
 		const room = this.props.rooms.find(x => x.url === chatRoom);
 		if (room)
-			this.props.subscribeToChat( room.url );
+			this.props.subscribeToChat( room.url, this.props.user.email );
 	}
 	unsubscribeToChat() {
 		if (this.props.chatRef) {
-			this.props.unsubscribeToChat( this.props.chatRef );
+			this.props.unsubscribeToChat(
+				this.props.chatRef,
+				this.props.chatName,
+				this.props.sessionKey
+			);
 		}
 	}
 	renderMessage(message, index) {
@@ -73,5 +77,7 @@ export default connect(state => ({
 	user:		state.Auth.User,
 	rooms:		state.Chat.Rooms,
 	chatRef:	state.Chat.Chat.chatRef,
-	messages:	state.Chat.Chat.messages
+	chatName:	state.Chat.Chat.chatName,
+	messages:	state.Chat.Chat.messages,
+	sessionKey:	state.Chat.Chat.sessionKey
 }), {subscribeToChat, unsubscribeToChat})(Messages);
