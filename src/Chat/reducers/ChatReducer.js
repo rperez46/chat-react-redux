@@ -4,6 +4,7 @@ import {
 	UPDATE_MESSAGES,
 	CONNECT_TO_CHAT,
 	UPDATE_CHAT_INPUT,
+	UPDATE_ONLINE_USERS,
 	DISCONNECTED_FROM_CHAT
 } from '../actions/types';
 
@@ -12,7 +13,8 @@ const INITIAL_STATE = {
 	input:		'',
 	chatRef:	undefined,
 	chatName:	'',
-	messages:	[]
+	messages:	[],
+	onlineUsers: []
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -27,6 +29,8 @@ export default (state = INITIAL_STATE, action) => {
 			return {...state, messages: action.messages};
 		case MESSAGE_SENT:
 			return {...state, input: ''};
+		case UPDATE_ONLINE_USERS:
+			return {...state, onlineUsers: action.onlineUsers}
 		default:
 			return state;
 	}

@@ -4,8 +4,9 @@ import {
 	LOAD_CHAT_ROOMS,
 	CONNECT_TO_CHAT,
 	UPDATE_MESSAGES,
+	UPDATE_ONLINE_USERS,
 	DISCONNECTED_FROM_CHAT
-	} from './types';
+} from './types';
 
 export const LoadChatRooms = () => {
 	return dispatch => {
@@ -22,7 +23,6 @@ export const subscribeToChat = (chatName, userEmail) => {
 		const chatRef = firebase
 			.database()
 			.ref('chat/' + chatName + '/messages');
-
 
 		connectToChat(chatName, userEmail, chatRef, dispatch);
 
@@ -50,6 +50,17 @@ export const sendMessage = (chatRef, message, email, dispatch) => {
 		chatRef.push({ message, from: email });
 		dispatch({ type: MESSAGE_SENT });
 	};
+};
+export const loadUsers = (chatName) => {
+	return dispatch => {
+		firebase
+			.database()
+			.ref('chat/' + chatName + '/users')
+			.on('value', snapshot => {
+				dispatch({type: UPDATE_ONLINE_USERS, onlineUsers: snapshot.val() });
+			});
+	};
+
 };
 const connectToChat = (chatName, userEmail, chatRef, dispatch) => {
 	const onlineUsersRef = firebase
