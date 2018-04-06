@@ -1,6 +1,6 @@
 import React, {Component}	from 'react';
 import {connect}	from 'react-redux';
-import {Button, Menu, Icon, Dropdown} from 'semantic-ui-react';
+import {Menu, Icon, Dropdown} from 'semantic-ui-react';
 import {logout} from '../actions';
 
 class Header extends Component {

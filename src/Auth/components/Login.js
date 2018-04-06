@@ -140,7 +140,7 @@ export default connect(state => ({
 	password:	state.Auth.Login.password,
 	isAuthenticated: state.Auth.Login.isAuthenticated,
 
-	isEmailSent:				state. Auth.Verification.isEmailSent,
+	isEmailSent:				state.Auth.Verification.isEmailSent,
 	loadingVerification:		state.Auth.Verification.loading,
 	requireEmailVerification:	state.Auth.Verification.requireEmailVerification
 

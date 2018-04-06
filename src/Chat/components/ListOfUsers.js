@@ -1,7 +1,6 @@
 import React, {Component}	from 'react';
 import {connect}		from 'react-redux';
-import {Link}			from 'react-router-dom';
-import {Button, Grid, Segment} from 'semantic-ui-react';
+import {Grid, Segment} from 'semantic-ui-react';
 
 import {loadUsers} from '../actions'
 
@@ -33,7 +32,7 @@ class ListOfUsers extends Component {
 		return result;
 	}
 	render() {
-		const {users, chatName} = this.props;
+		const {users} = this.props;
 
 		return (
 			<Grid columns={1}>
