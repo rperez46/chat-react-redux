@@ -34,6 +34,7 @@ class Messages extends Component {
 		if (this.props.chatRef) {
 			this.props.unsubscribeToChat(
 				this.props.chatRef,
+				this.props.usersRef,
 				this.props.chatName,
 				this.props.sessionKey
 			);
@@ -77,6 +78,7 @@ export default connect(state => ({
 	user:		state.Auth.User,
 	rooms:		state.Chat.Rooms,
 	chatRef:	state.Chat.Chat.chatRef,
+	usersRef:	state.Chat.Chat.usersRef,
 	chatName:	state.Chat.Chat.chatName,
 	messages:	state.Chat.Chat.messages,
 	sessionKey:	state.Chat.Chat.sessionKey

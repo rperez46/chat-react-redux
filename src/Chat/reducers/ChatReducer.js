@@ -12,6 +12,7 @@ import {
 const INITIAL_STATE = {
 	input:		'',
 	chatRef:	undefined,
+	usersRef:	undefined,
 	chatName:	'',
 	messages:	[],
 	onlineUsers: []
@@ -30,7 +31,7 @@ export default (state = INITIAL_STATE, action) => {
 		case MESSAGE_SENT:
 			return {...state, input: ''};
 		case UPDATE_ONLINE_USERS:
-			return {...state, onlineUsers: action.onlineUsers}
+			return {...state, onlineUsers: action.onlineUsers, usersRef: action.usersRef}
 		default:
 			return state;
 	}

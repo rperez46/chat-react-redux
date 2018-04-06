@@ -32,8 +32,9 @@ export const subscribeToChat = (chatName, userEmail) => {
 		});
 	};
 };
-export const unsubscribeToChat = (chatRef, chatName, sessionKey) => {
+export const unsubscribeToChat = (chatRef, usersRef, chatName, sessionKey) => {
 	chatRef.off();
+	usersRef.off();
 
 	if (sessionKey) {
 		firebase
@@ -53,12 +54,13 @@ export const sendMessage = (chatRef, message, email, dispatch) => {
 };
 export const loadUsers = (chatName) => {
 	return dispatch => {
-		firebase
+		const usersRef = firebase
 			.database()
-			.ref('chat/' + chatName + '/users')
-			.on('value', snapshot => {
-				dispatch({type: UPDATE_ONLINE_USERS, onlineUsers: snapshot.val() });
-			});
+			.ref('chat/' + chatName + '/users');
+
+		usersRef.on('value', snapshot => {
+			dispatch({type: UPDATE_ONLINE_USERS, onlineUsers: snapshot.val(), usersRef });
+		});
 	};
 
 };
