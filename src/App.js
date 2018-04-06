@@ -4,6 +4,7 @@ import firebase from 'firebase';
 import firebaseConfig from './Config/Firebase';
 import authRoutes from './Auth/routes';
 import chatRoutes from './Chat/routes';
+import usersRoutes from './Users/routes';
 import './Auth/components/Auth.css';
 import './Chat/components/Chat.css';
 import {Container} from 'semantic-ui-react';
@@ -21,6 +22,7 @@ class App extends Component {
 					{authRoutes}
 					<Container>
 						{chatRoutes}
+						{usersRoutes}
 					</Container>
 				</div>
 			</Router>

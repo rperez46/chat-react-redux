@@ -1,5 +1,6 @@
 import React, {Component}	from 'react';
 import {connect}	from 'react-redux';
+import { Link } from 'react-router-dom'
 import {Menu, Icon, Dropdown} from 'semantic-ui-react';
 import {logout} from '../actions';
 
@@ -19,6 +20,12 @@ class Header extends Component {
 				<Menu.Menu position='right'>
 					<Dropdown direction="right" item simple text='Menu'>
 						<Dropdown.Menu>
+							<Dropdown.Item>
+								<Link to="/users/my-profile" style={{ color: '#222' }}>
+									<Icon name="user"/>
+									Profile
+								</Link>
+							</Dropdown.Item>
 							<Dropdown.Item onClick={this.props.logout}>
 								<Icon name="log out" />
 								Logout
