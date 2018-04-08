@@ -15,6 +15,16 @@ export const loadUserData = () => {
 			});
 	};
 }; 
+
+export const createUserInfo = () => {
+	return dispatch => {
+		const {uid, email} = firebase.auth().currentUser;
+		firebase
+			.database()
+			.ref('users/' + uid)
+			.set({email});
+	};
+}
 export const updateUser = (alias, description) => {
 	const {uid, email} = firebase.auth().currentUser;
 	firebase

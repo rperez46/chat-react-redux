@@ -4,12 +4,13 @@ import { Link } from 'react-router-dom'
 import {Menu, Icon, Dropdown} from 'semantic-ui-react';
 import {logout}		from '../actions';
 import {Redirect}	from 'react-router';
+import {routsThanDontRequiereAuth} from '../../Config/routesConfig';
 
 class Header extends Component {
 	render() {
 		const {user} = this.props;
 		if (!this.props.isAuthenticated) {
-			if (this.props.location.pathname === '/')
+			if (routsThanDontRequiereAuth.indexOf(this.props.location.pathname) !== -1)
 				return false;
 			return <Redirect to="/" />;
 		}
