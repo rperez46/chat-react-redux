@@ -2,7 +2,9 @@ import React from 'react'
 import { render } from 'react-dom'
 import { Provider } from 'react-redux'
 import { createStore, applyMiddleware, combineReducers } from 'redux'
-import ReduxThunk from 'redux-thunk';
+import firebase			from 'firebase';
+import ReduxThunk		from 'redux-thunk';
+import firebaseConfig	from './Config/Firebase';
 
 import App from './App';
 import AuthReducer from './Auth/reducers'
@@ -12,6 +14,7 @@ let store = createStore(
 	applyMiddleware(ReduxThunk)
 );
 
+firebase.initializeApp(firebaseConfig);
 render(
 	<Provider store={store}>
 		<App />

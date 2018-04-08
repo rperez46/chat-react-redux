@@ -13,15 +13,12 @@ class Messages extends Component {
 	componentWillUnmount() {
 		this.unsubscribeToChat();
 	}
-	componentWillReceiveProps(nextProps) {
-		const oldChatRoom = this.props.match.params.chatRoom;
-		const newChatRoom = nextProps.match.params.chatRoom;
-		if (oldChatRoom !== newChatRoom) {
-			this.unsubscribeToChat(this.props.chatRef);
-			this.subscribeToChat(newChatRoom);
+	componentDidUpdate(prevProps) {
+		if (prevProps.match !== this.props.match) {
+			this.unsubscribeToChat(prevProps.chatRef);
+			this.subscribeToChat(this.props.match.params.chatRoom);
 		}
-	}
-	componentDidUpdate() {
+		// Scroll to bottom when update.
 		const grid = document.getElementById('messageGrid');
 		grid.scrollTop = grid.scrollHeight;
 	}

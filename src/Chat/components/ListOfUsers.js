@@ -12,9 +12,9 @@ class ListOfUsers extends Component {
 			loadUsers(chatName);
 		}
 	}
-	componentWillReceiveProps(nextProps) {
-		if (nextProps.chatName !== this.props.chatName) {
-			this.props.loadUsers(nextProps.chatName);
+	componentDidUpdate(prevProps) {
+		if (prevProps.chatName !== this.props.chatName) {
+			this.props.loadUsers(this.props.chatName);
 		}
 	}
 	renderUser(user, index) {
