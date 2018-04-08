@@ -10,15 +10,21 @@ import App from './App';
 import AuthReducer from './Auth/reducers'
 import ChatReducer from './Chat/reducers'
 import UsersReducer from './Users/reducers'
+import {loadState, saveState} from './localStorage';
 
-let store = createStore(
+const store = createStore(
 	combineReducers({
 		Auth: AuthReducer,
 		Chat: ChatReducer,
 		User: UsersReducer
 	}),
+	loadState(),
 	applyMiddleware(ReduxThunk)
 );
+
+store.subscribe(() => {
+	saveState(store.getState());
+});
 
 firebase.initializeApp(firebaseConfig);
 render(
