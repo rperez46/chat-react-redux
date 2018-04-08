@@ -13,6 +13,7 @@ import {
 import { toast } from 'react-toastify';
 
 import {updateEmail, updatePassword, login, sendActivationMail} from '../actions';
+import {loadUserData} from '../../Users/actions';
 
 class Login extends Component {
 	login() {
@@ -70,6 +71,7 @@ class Login extends Component {
 	renderRedirect() {
 		if (this.props.isAuthenticated) {
 			toast.success("Welcome !");
+			this.props.loadUserData();
 			return <Redirect to="/home" />
 		}
 	}
@@ -144,4 +146,4 @@ export default connect(state => ({
 	loadingVerification:		state.Auth.Verification.loading,
 	requireEmailVerification:	state.Auth.Verification.requireEmailVerification
 
-}), {updateEmail, updatePassword, login, sendActivationMail})(Login);
+}), {updateEmail, updatePassword, login, sendActivationMail, loadUserData})(Login);

@@ -9,8 +9,14 @@ import firebaseConfig	from './Config/Firebase';
 import App from './App';
 import AuthReducer from './Auth/reducers'
 import ChatReducer from './Chat/reducers'
+import UsersReducer from './Users/reducers'
+
 let store = createStore(
-	combineReducers({ Auth: AuthReducer, Chat: ChatReducer }),
+	combineReducers({
+		Auth: AuthReducer,
+		Chat: ChatReducer,
+		User: UsersReducer
+	}),
 	applyMiddleware(ReduxThunk)
 );
 
