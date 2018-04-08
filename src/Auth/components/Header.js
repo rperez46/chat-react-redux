@@ -2,13 +2,16 @@ import React, {Component}	from 'react';
 import {connect}	from 'react-redux';
 import { Link } from 'react-router-dom'
 import {Menu, Icon, Dropdown} from 'semantic-ui-react';
-import {logout} from '../actions';
+import {logout}		from '../actions';
+import {Redirect}	from 'react-router';
 
 class Header extends Component {
 	render() {
 		const {user} = this.props;
 		if (!this.props.isAuthenticated) {
-			return false;
+			if (this.props.location.pathname === '/')
+				return false;
+			return <Redirect to="/" />;
 		}
 		return (
 			<Menu inverted>
