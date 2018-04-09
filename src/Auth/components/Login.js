@@ -17,7 +17,8 @@ import {loadUserData} from '../../Users/actions';
 
 class Login extends Component {
 	state = {email: '', password: ''}
-	login() {
+	login(e) {
+		e.preventDefault();
 		this.props.login(
 			this.state.email,
 			this.state.password
@@ -86,53 +87,56 @@ class Login extends Component {
 	render() {
 		const {email, password} = this.state;
 		return (
-			<Grid className="gridStyle" columns={2} centered>
-				<Grid.Row>
-					<Grid.Column>
-						{this.renderRedirect()}
-						<Header as="h1" textAlign="center">
-							<Icon.Group>
-								<Icon name="television" />
-								<Icon name="star" color="yellow" corner loading />
-							</Icon.Group>
-							This is just for learning.
-						</Header>
-						<Input fluid
-							id			= "email"
-							value		= {email}
-							onChange	= {e => this.setState({email: e.target.value})}
-							placeholder	= "Email"
-						/>
-						<Input fluid
-							id			= "password"
-							type		= "password"
-							value		= {password}
-							onChange	= {e => this.setState({password: e.target.value})}
-							placeholder	= "Password"
-						/>
-					</Grid.Column>
-				</Grid.Row>
-				{this.renderErrors()}
-				{this.renderEmailVerification()}
-				{this.renderSentEmailButton()}
-				<Grid.Row>
-					<Button
-						primary
-						loading={this.props.loading}
-						onClick={this.login.bind(this)}
-					>
-						Log in
-					</Button>
-				</Grid.Row>
-				<Grid.Row>
-					<Link to={'/register'}>
-						Click here for Register !
-					</Link>
-				</Grid.Row>
-				<Grid.Row>
-					{this.renderforgotPassword()}
-				</Grid.Row>
-			</Grid>
+			<form onSubmit={this.login.bind(this)}>
+				<Grid className="gridStyle" columns={2} centered>
+					<Grid.Row>
+						<Grid.Column>
+							{this.renderRedirect()}
+							<Header as="h1" textAlign="center">
+								<Icon.Group>
+									<Icon name="television" />
+									<Icon name="star" color="yellow" corner loading />
+								</Icon.Group>
+								This is just for learning.
+							</Header>
+							<Input fluid
+								id			= "email"
+								value		= {email}
+								onChange	= {e => this.setState({email: e.target.value})}
+								placeholder	= "Email"
+							/>
+							<Input fluid
+								id			= "password"
+								type		= "password"
+								value		= {password}
+								onChange	= {e => this.setState({password: e.target.value})}
+								placeholder	= "Password"
+							/>
+						</Grid.Column>
+					</Grid.Row>
+					{this.renderErrors()}
+					{this.renderEmailVerification()}
+					{this.renderSentEmailButton()}
+					<Grid.Row>
+						<Button
+							primary
+							type="submit"
+							loading={this.props.loading}
+							onClick={this.login.bind(this)}
+						>
+							Log in
+						</Button>
+					</Grid.Row>
+					<Grid.Row>
+						<Link to={'/register'}>
+							Click here for Register !
+						</Link>
+					</Grid.Row>
+					<Grid.Row>
+						{this.renderforgotPassword()}
+					</Grid.Row>
+				</Grid>
+			</form>
 		);
 	}
 }

@@ -21,7 +21,8 @@ class ForgotPassword extends Component {
 			return <Redirect to="/" />;
 		}
 	}
-	resetPassword() {
+	resetPassword(e) {
+		e.preventDefault();
 		this.props.forgotPassword( this.state.email );
 	}
 	renderError() {
@@ -40,38 +41,40 @@ class ForgotPassword extends Component {
 	}
 	render() {
 		return (
-			<Grid className="gridStyle" columns={2} centered>
-				<Grid.Row>
-					<Grid.Column>
-						{this.renderRedirect()}
-						<Header as="h1" textAlign="center">
-							<Icon.Group>
-								<Icon name="television" />
-								<Icon name="star" color="yellow" corner loading />
-							</Icon.Group>
-							Forgot password.
-						</Header>
-						<Input fluid
-							id			= "email"
-							value		= {this.state.email}
-							onChange	= {e => this.setState({email: e.target.value})}
-							placeholder	= "Email"
-						/>
-					</Grid.Column>
-				</Grid.Row>
-				<Grid.Row>
-					{this.renderError()}
-				</Grid.Row>
-				<Grid.Row>
-					<Button
-						primary
-						loading={this.props.loading}
-						onClick={this.resetPassword.bind(this)}
-					>
-						Reset password
-					</Button>
-				</Grid.Row>
-			</Grid>
+			<form onSubmit={this.resetPassword.bind(this)}>
+				<Grid className="gridStyle" columns={2} centered>
+					<Grid.Row>
+						<Grid.Column>
+							{this.renderRedirect()}
+							<Header as="h1" textAlign="center">
+								<Icon.Group>
+									<Icon name="television" />
+									<Icon name="star" color="yellow" corner loading />
+								</Icon.Group>
+								Forgot password.
+							</Header>
+							<Input fluid
+								id			= "email"
+								value		= {this.state.email}
+								onChange	= {e => this.setState({email: e.target.value})}
+								placeholder	= "Email"
+							/>
+						</Grid.Column>
+					</Grid.Row>
+					<Grid.Row>
+						{this.renderError()}
+					</Grid.Row>
+					<Grid.Row>
+						<Button primary
+							type="submit"
+							loading={this.props.loading}
+							onClick={this.resetPassword.bind(this)}
+						>
+							Reset password
+						</Button>
+					</Grid.Row>
+				</Grid>
+			</form>
 		);
 	}
 }

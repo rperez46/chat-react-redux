@@ -19,7 +19,8 @@ class Register extends Component {
 	state = {email: '', password: '', rePassword: ''}
 	passwordIsRePassword() { return this.state.password === this.state.rePassword; }
 
-	Register() {
+	Register(e) {
+		e.preventDefault();
 		if (this.passwordIsRePassword()) {
 			const {email, password} = this.state;
 			this.props.RegisterUser( email, password );
@@ -57,51 +58,53 @@ class Register extends Component {
 	render() {
 		const {email, password, rePassword} = this.state;
 		return (
-			<Grid className="gridStyle" columns={2} centered>
-				<Grid.Row>
-					<Grid.Column>
-						<Header as="h1" textAlign="center">
-							<Icon.Group>
-								<Icon name="television" />
-								<Icon name="star" color="yellow" corner loading />
-							</Icon.Group>
-							Register
-						</Header>
-						<Input fluid
-							id			= "email"
-							value		= {email}
-							onChange	= {e => this.setState({email: e.target.value})}
-							placeholder	= "Email"
-						/>
-						<Input fluid
-							id			= "password"
-							type		= "password"
-							value		= {password}
-							onChange	= {e => this.setState({password: e.target.value})}
-							placeholder	= "Password"
-						/>
-						<Input fluid
-							id			= "rePassword"
-							type		= "password"
-							value		= {rePassword}
-							onChange	= {e => this.setState({rePassword: e.target.value})}
-							placeholder	= "Repeat Password"
-						/>
-						{this.renderRePasswordWarning()}
-						{this.renderRedirect()}
-						{this.renderError()}
-					</Grid.Column>
-				</Grid.Row>
-				<Grid.Row>
-					<Button
-						primary
-						loading={this.props.loading}
-						onClick={this.Register.bind(this)}
-					>
-						Create account
-					</Button>
-				</Grid.Row>
-			</Grid>
+			<form onSubmit={this.Register.bind(this)}>
+				<Grid className="gridStyle" columns={2} centered>
+					<Grid.Row>
+						<Grid.Column>
+							<Header as="h1" textAlign="center">
+								<Icon.Group>
+									<Icon name="television" />
+									<Icon name="star" color="yellow" corner loading />
+								</Icon.Group>
+								Register
+							</Header>
+							<Input fluid
+								id			= "email"
+								value		= {email}
+								onChange	= {e => this.setState({email: e.target.value})}
+								placeholder	= "Email"
+							/>
+							<Input fluid
+								id			= "password"
+								type		= "password"
+								value		= {password}
+								onChange	= {e => this.setState({password: e.target.value})}
+								placeholder	= "Password"
+							/>
+							<Input fluid
+								id			= "rePassword"
+								type		= "password"
+								value		= {rePassword}
+								onChange	= {e => this.setState({rePassword: e.target.value})}
+								placeholder	= "Repeat Password"
+							/>
+							{this.renderRePasswordWarning()}
+							{this.renderRedirect()}
+							{this.renderError()}
+						</Grid.Column>
+					</Grid.Row>
+					<Grid.Row>
+						<Button primary
+							type="submit"
+							loading={this.props.loading}
+							onClick={this.Register.bind(this)}
+						>
+							Create account
+						</Button>
+					</Grid.Row>
+				</Grid>
+			</form>
 		);
 	}
 }
