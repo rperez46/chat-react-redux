@@ -39,7 +39,7 @@ class Messages extends Component {
 	}
 	renderMessage(message, index) {
 		let messageSettings = { align: 'left', color: 'blue' };
-		if (message.from === this.props.user.email) {
+		if (message.userid === this.props.user.id) {
 			messageSettings = { align: 'right', color: 'green' };
 		}
 
@@ -72,7 +72,7 @@ class Messages extends Component {
 }
 
 export default connect(state => ({
-	user:		state.Auth.User,
+	user:		state.User,
 	rooms:		state.Chat.Rooms,
 	chatRef:	state.Chat.Chat.chatRef,
 	usersRef:	state.Chat.Chat.usersRef,

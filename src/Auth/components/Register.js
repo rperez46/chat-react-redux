@@ -11,17 +11,17 @@ import {
 } from 'semantic-ui-react';
 import {
 	logout,
-	updateEmail,
 	RegisterUser,
-	updateRePassword,
-	sendActivationMail,
-	updateRegisterPassword
+	sendActivationMail
 } from '../actions';
 
 class Register extends Component {
+	state = {email: '', password: '', rePassword: ''}
+	passwordIsRePassword() { return this.state.password === this.state.rePassword; }
+
 	Register() {
-		if (this.props.passwordIsRePassword) {
-			const {email, password} = this.props;
+		if (this.passwordIsRePassword()) {
+			const {email, password} = this.state;
 			this.props.RegisterUser( email, password );
 		}
 	}
@@ -37,7 +37,7 @@ class Register extends Component {
 		);
 	}
 	renderRePasswordWarning() {
-		if (!this.props.passwordIsRePassword) {
+		if (!this.passwordIsRePassword()) {
 			return this.renderSegment('The password field must be the same than the repeat password field. ');
 		}
 	}
@@ -55,6 +55,7 @@ class Register extends Component {
 		}
 	}
 	render() {
+		const {email, password, rePassword} = this.state;
 		return (
 			<Grid className="gridStyle" columns={2} centered>
 				<Grid.Row>
@@ -68,22 +69,22 @@ class Register extends Component {
 						</Header>
 						<Input fluid
 							id			= "email"
-							value		= {this.props.email}
-							onChange	= {e => this.props.updateEmail(e.target.value)}
+							value		= {email}
+							onChange	= {e => this.setState({email: e.target.value})}
 							placeholder	= "Email"
 						/>
 						<Input fluid
 							id			= "password"
 							type		= "password"
-							value		= {this.props.password}
-							onChange	= {e => this.props.updateRegisterPassword(e.target.value)}
+							value		= {password}
+							onChange	= {e => this.setState({password: e.target.value})}
 							placeholder	= "Password"
 						/>
 						<Input fluid
 							id			= "rePassword"
 							type		= "password"
-							value		= {this.props.rePassword}
-							onChange	= {e => this.props.updateRePassword(e.target.value)}
+							value		= {rePassword}
+							onChange	= {e => this.setState({rePassword: e.target.value})}
 							placeholder	= "Repeat Password"
 						/>
 						{this.renderRePasswordWarning()}
@@ -107,18 +108,10 @@ class Register extends Component {
 
 export default connect(state => ({
 	error:		state.Auth.Register.error,
-	email:		state.Auth.Register.email,
 	loading:	state.Auth.Register.loading,
-	password:	state.Auth.Register.password,
-	rePassword:	state.Auth.Register.rePassword,
-
-	successRegister:		state.Auth.Register.successRegister,
-	passwordIsRePassword: 	state.Auth.Register.passwordIsRePassword
+	successRegister:		state.Auth.Register.successRegister
 }), {
 	logout,
-	updateEmail,
 	RegisterUser,
-	updateRePassword,
-	sendActivationMail,
-	updateRegisterPassword
+	sendActivationMail
 })(Register);

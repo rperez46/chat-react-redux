@@ -1,29 +1,33 @@
-import {UPDATE_USER, LOAD_USER} from './types';
+import {UPDATE_USER, LOAD_USER, CREATE_USER_DATA} from './types';
 import firebase		from 'firebase';
 import { toast }	from 'react-toastify';
 
 export const loadUserData = () => {
 	return dispatch => {
-		const {uid} = firebase.auth().currentUser;
-		firebase
-			.database()
-			.ref('users/' + uid)
-			.once('value')
-			.then(snapshot => {
-				console.log(snapshot.val())
-				dispatch({type: LOAD_USER, ...snapshot.val() });
-			});
+		const currentUser = firebase.auth().currentUser;
+		if (currentUser) {
+			firebase
+				.database()
+				.ref('users/' + currentUser.uid)
+				.once('value')
+				.then(snapshot => {
+					if (snapshot.val() === null) {
+						return dispatch(createUserInfo());
+					}
+					dispatch({type: LOAD_USER, ...snapshot.val(), id: currentUser.uid});
+				});
+		}
 	};
 }; 
 
 export const createUserInfo = () => {
-	return dispatch => {
-		const {uid, email} = firebase.auth().currentUser;
-		firebase
-			.database()
-			.ref('users/' + uid)
-			.set({email});
-	};
+	const {uid, email} = firebase.auth().currentUser;
+	firebase
+		.database()
+		.ref('users/' + uid)
+		.set({email});
+
+	return {type: CREATE_USER_DATA, email, id: uid};
 }
 export const updateUser = (alias, description) => {
 	const {uid, email} = firebase.auth().currentUser;
@@ -33,5 +37,5 @@ export const updateUser = (alias, description) => {
 		.set({ alias, description, email});
 
 	toast.success("Changes saved.");
-	return {type: UPDATE_USER, alias, description};
+	return {type: UPDATE_USER, alias, description, email, id: uid};
 };

@@ -1,8 +1,7 @@
 import {
 	REGISTER_USER,
 	FAILED_REGISTER,
-	SUCCESS_REGISTER,
-	UPDATE_REGISTER_PASSWORD
+	SUCCESS_REGISTER
 } from './types';
 import firebase from 'firebase';
 import { toast } from 'react-toastify';
@@ -13,7 +12,6 @@ const success	= user => {
 	return { type: SUCCESS_REGISTER, user };
 };
 
-export const updateRegisterPassword	= text => ({ type: UPDATE_REGISTER_PASSWORD,	text });
 export const RegisterUser = (email, password) => {
 	return dispatch => {
 		dispatch({ type: REGISTER_USER });

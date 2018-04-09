@@ -3,10 +3,8 @@ import {
 	USER_LOGOUT,
 	FAILED_LOGIN,
 	SUCCESS_LOGIN,
-	REQUIRE_EMAIL_VERIFICATION,
+	REQUIRE_EMAIL_VERIFICATION
 
-	UPDATE_EMAIL,
-	UPDATE_PASSWORD
 } from '../actions/types';
 
 
@@ -14,18 +12,11 @@ const INITIAL_STATE = {
 	error:		'',
 	loading:	false,
 
-	email:		'',
-	password:	'',
 	isAuthenticated: false
 };
 
 export default (state = INITIAL_STATE, action) => {
 	switch (action.type)  {
-		case UPDATE_EMAIL:
-			return {...state, email: action.text};
-		case UPDATE_PASSWORD:
-			return {...state, password: action.text};
-
 		case LOGIN:
 			return {...state, loading: true, error:''};
 		case SUCCESS_LOGIN:

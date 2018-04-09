@@ -8,10 +8,12 @@ import {
 import {updateChatInput, sendMessage} from '../actions';
 
 class Capture extends Component {
+	getUserAlias() { return this.props.user.alias ? this.props.user.alias : this.props.user.email; }
+
 	sendMessage() {
 		const {input, chatRef, user} = this.props;
 		if (chatRef && input) {
-			this.props.sendMessage( chatRef, input, user.email );
+			this.props.sendMessage( chatRef, input, this.getUserAlias(), user.id );
 		}
 	}
 	keyDown(e) {
@@ -36,7 +38,7 @@ class Capture extends Component {
 }
 
 export default connect(state => ({
-	user:		state.Auth.User,
+	user:		state.User,
 	input:		state.Chat.Chat.input,
 	chatRef:	state.Chat.Chat.chatRef
 }), {updateChatInput, sendMessage})(Capture); 

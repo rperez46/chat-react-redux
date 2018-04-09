@@ -7,8 +7,13 @@ class Profile extends Component {
 	state = { alias: '', description: '', email: '' };
 
 	static getDerivedStateFromProps(nextProps, prevState) {
+		const {alias, description} = nextProps.user;
 		if (prevState.user !== nextProps.user)
-			return {...nextProps.user};
+			return {
+				email:			nextProps.user.email,
+				alias:			alias === null			? '' : nextProps.user.alias,
+				description:	description === null	? '' : nextProps.user.description
+			};
 		return prevState;
 	}
 
@@ -36,7 +41,7 @@ class Profile extends Component {
 				</Grid.Row>
 				<Grid.Row>
 					<Button primary
-						onClick={() => updateUser(alias, description)}
+						onClick={() => this.props.updateUser(alias, description)}
 					>
 						Save changes
 					</Button>
@@ -47,4 +52,4 @@ class Profile extends Component {
 }
 export default connect(state => ({
 	user: state.User
-}))(Profile);
+}),{updateUser})(Profile);

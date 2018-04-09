@@ -23,7 +23,18 @@ const store = createStore(
 );
 
 store.subscribe(() => {
-	saveState(store.getState());
+	const state = store.getState();
+	saveState({
+		Auth: {
+			Login: {
+				isAuthenticated: state.Auth.Login.isAuthenticated
+			}
+		},
+		User: state.User,
+		Chat: {
+			Rooms: state.Chat.Rooms
+		}
+	});
 });
 
 firebase.initializeApp(firebaseConfig);

@@ -12,14 +12,15 @@ import {
 } from 'semantic-ui-react';
 import { toast } from 'react-toastify';
 
-import {updateEmail, updatePassword, login, sendActivationMail} from '../actions';
+import {login, sendActivationMail} from '../actions';
 import {loadUserData} from '../../Users/actions';
 
 class Login extends Component {
+	state = {email: '', password: ''}
 	login() {
 		this.props.login(
-			this.props.email,
-			this.props.password
+			this.state.email,
+			this.state.password
 		);
 	}
 	renderEmailVerification() {
@@ -83,6 +84,7 @@ class Login extends Component {
 		);
 	}
 	render() {
+		const {email, password} = this.state;
 		return (
 			<Grid className="gridStyle" columns={2} centered>
 				<Grid.Row>
@@ -97,15 +99,15 @@ class Login extends Component {
 						</Header>
 						<Input fluid
 							id			= "email"
-							value		= {this.props.email}
-							onChange	= {e => this.props.updateEmail(e.target.value)}
+							value		= {email}
+							onChange	= {e => this.setState({email: e.target.value})}
 							placeholder	= "Email"
 						/>
 						<Input fluid
 							id			= "password"
 							type		= "password"
-							value		= {this.props.password}
-							onChange	= {e => this.props.updatePassword(e.target.value)}
+							value		= {password}
+							onChange	= {e => this.setState({password: e.target.value})}
 							placeholder	= "Password"
 						/>
 					</Grid.Column>
@@ -137,13 +139,11 @@ class Login extends Component {
 
 export default connect(state => ({
 	error:		state.Auth.Login.error,
-	email:		state.Auth.Login.email,
 	loading:	state.Auth.Login.loading,
-	password:	state.Auth.Login.password,
 	isAuthenticated: state.Auth.Login.isAuthenticated,
 
 	isEmailSent:				state.Auth.Verification.isEmailSent,
 	loadingVerification:		state.Auth.Verification.loading,
 	requireEmailVerification:	state.Auth.Verification.requireEmailVerification
 
-}), {updateEmail, updatePassword, login, sendActivationMail, loadUserData})(Login);
+}), {login, sendActivationMail, loadUserData})(Login);

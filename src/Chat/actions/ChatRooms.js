@@ -46,9 +46,9 @@ export const unsubscribeToChat = (chatRef, usersRef, chatName, sessionKey) => {
 	return { type: DISCONNECTED_FROM_CHAT };
 }
 
-export const sendMessage = (chatRef, message, email, dispatch) => {
+export const sendMessage = (chatRef, message, email, userid, dispatch) => {
 	return dispatch => {
-		chatRef.push({ message, from: email });
+		chatRef.push({ message, from: email, userid});
 		dispatch({ type: MESSAGE_SENT });
 	};
 };

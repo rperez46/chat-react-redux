@@ -10,15 +10,19 @@ import {
 	Segment
 } from 'semantic-ui-react';
 
-import {forgotPassword, forgotEmailChange} from '../actions';
+import {forgotPassword} from '../actions';
+import { toast } from 'react-toastify';
 
 class ForgotPassword extends Component {
+	state = {email: ''}
 	renderRedirect() {
-		if (this.props.mailWasSent)
+		if (this.props.mailWasSent) {
+			toast.success('we will send you an email to restore your password.');
 			return <Redirect to="/" />;
+		}
 	}
 	resetPassword() {
-		this.props.forgotPassword( this.props.email );
+		this.props.forgotPassword( this.state.email );
 	}
 	renderError() {
 		const {error} = this.props;
@@ -49,8 +53,8 @@ class ForgotPassword extends Component {
 						</Header>
 						<Input fluid
 							id			= "email"
-							value		= {this.props.email}
-							onChange	= {e => this.props.forgotEmailChange(e.target.value)}
+							value		= {this.state.email}
+							onChange	= {e => this.setState({email: e.target.value})}
 							placeholder	= "Email"
 						/>
 					</Grid.Column>
@@ -73,7 +77,6 @@ class ForgotPassword extends Component {
 }
 
 export default connect(state => ({
-	email:			state.Auth.Forgot.email,
 	error:			state.Auth.Forgot.error,
-	mailWasSent:	state.Auth.Forgot.mailWasSent,
-}), {forgotPassword, forgotEmailChange})(ForgotPassword);
+	mailWasSent:	state.Auth.Forgot.mailWasSent
+}), {forgotPassword})(ForgotPassword);
