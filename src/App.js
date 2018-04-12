@@ -7,20 +7,24 @@ import './Auth/components/Auth.css';
 import './Chat/components/Chat.css';
 import {Container} from 'semantic-ui-react';
 import { ToastContainer } from 'react-toastify';
+import {ThemeContext, withTheme} from './ThemeContext';
+import Themes from './Themes';
 
 class App extends Component {
 	render() {
 		return (
-			<Router>
-				<div>
-					<ToastContainer />
-					{authRoutes}
-					<Container>
-						{chatRoutes}
-						{usersRoutes}
-					</Container>
-				</div>
-			</Router>
+			<ThemeContext.Provider value={Themes.Dark}>
+				<Router>
+					<div>
+						<ToastContainer />
+						{authRoutes}
+						<Container>
+							{chatRoutes}
+							{usersRoutes}
+						</Container>
+					</div>
+				</Router>
+			</ThemeContext.Provider>
 		);
 	}
 }

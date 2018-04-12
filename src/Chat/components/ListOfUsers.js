@@ -3,6 +3,7 @@ import {connect}		from 'react-redux';
 import {Grid, Segment} from 'semantic-ui-react';
 
 import {loadUsers} from '../actions'
+import {withTheme} from '../../ThemeContext';
 
 
 class ListOfUsers extends Component {
@@ -18,8 +19,9 @@ class ListOfUsers extends Component {
 		}
 	}
 	renderUser(user, index) {
+		const {tag} = this.props;
 		return (
-			<Segment key={`user-${index}`}>
+			<Segment style={tag} key={`user-${index}`}>
 				{user.email}
 			</Segment>
 		);
@@ -33,7 +35,6 @@ class ListOfUsers extends Component {
 	}
 	render() {
 		const {users} = this.props;
-
 		return (
 			<Grid columns={1}>
 				<Grid.Row>
@@ -54,4 +55,4 @@ class ListOfUsers extends Component {
 export default connect(state => ({
 	users:		state.Chat.Chat.onlineUsers,
 	chatName:	state.Chat.Chat.chatName
-}),{loadUsers})(ListOfUsers);
+}),{loadUsers})(withTheme(ListOfUsers));

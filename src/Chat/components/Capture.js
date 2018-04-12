@@ -6,6 +6,7 @@ import {
 	Segment
 } from 'semantic-ui-react';
 import {updateChatInput, sendMessage} from '../actions';
+import {withTheme} from '../../ThemeContext';
 
 class Capture extends Component {
 	getUserAlias() { return this.props.user.alias ? this.props.user.alias : this.props.user.email; }
@@ -21,6 +22,7 @@ class Capture extends Component {
 			return this.sendMessage();
 	}
 	render() {
+		const {buttonStyle} = this.props;
 		return (
 			<Segment>
 				<Input
@@ -29,7 +31,7 @@ class Capture extends Component {
 					onKeyDown	= {this.keyDown.bind(this)}
 					placeholder	= "Write something..."
 				/>
-				<Button onClick={this.sendMessage.bind(this)}>
+				<Button stlye={buttonStyle} onClick={this.sendMessage.bind(this)}>
 					Enviar
 				</Button>
 			</Segment>
@@ -41,4 +43,4 @@ export default connect(state => ({
 	user:		state.User,
 	input:		state.Chat.Chat.input,
 	chatRef:	state.Chat.Chat.chatRef
-}), {updateChatInput, sendMessage})(Capture); 
+}), {updateChatInput, sendMessage})(withTheme(Capture)); 
